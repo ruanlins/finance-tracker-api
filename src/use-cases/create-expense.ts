@@ -6,7 +6,7 @@ interface CreateExpenseUseCaseRequest {
   location: string;
   type: $Enums.Type;
   amount: number;
-  date: Date | string;
+  date: Date;
   user_id: string;
   method: $Enums.Method;
   category: string;

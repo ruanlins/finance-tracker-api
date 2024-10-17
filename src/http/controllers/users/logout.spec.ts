@@ -1,3 +1,4 @@
+import { createAndAuthenticateUser } from '@/utils/create-and-authenticate-user';
 import { app } from '../../../app';
 import { Server } from 'http';
 import request from 'supertest';
@@ -15,15 +16,11 @@ describe('Logout User Controller', () => {
   });
 
   it('should be able to logout', async () => {
-    const loginResponse = await request(server).post('/users/register').send({
-      name: 'John Doe',
-      email: 'johndoe@example.com',
-      password: '123456',
-    });
+    const cookie = await createAndAuthenticateUser(server);
 
     const response = await request(server)
       .post('/users/logout')
-      .set('Cookie', loginResponse.headers['set-cookie']);
+      .set('Cookie', cookie);
 
     expect(response.status).toEqual(200);
   });

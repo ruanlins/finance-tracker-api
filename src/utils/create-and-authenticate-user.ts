@@ -12,8 +12,12 @@ export async function createAndAuthenticateUser(app: Server) {
     },
   });
 
-  await request(app).post('/users/session').send({
+  const response = await request(app).post('/users/session').send({
     email: 'johndoe@test.com',
     password: '123456',
   });
+
+  const cookie = response.header['set-cookie'];
+
+  return cookie;
 }

@@ -1,30 +1,44 @@
-// import { createAndAuthenticateUser } from '@/utils/create-and-authenticate-user';
-// import { app } from '../../../app';
-// import { Server } from 'http';
-// import request from 'supertest';
-// import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { createAndAuthenticateUser } from '@/utils/create-and-authenticate-user';
+import { app } from '../../../app';
+import { Server } from 'http';
+import request from 'supertest';
+import { afterAll, beforeAll, describe, expect, it } from 'vitest';
+import { object } from 'zod';
 
-// describe('Create Expense Controller', () => {
-//   let server: Server;
+describe('Create Expense Controller', () => {
+  let server: Server;
 
-//   beforeAll(async () => {
-//     server = app.listen(0);
-//   });
+  beforeAll(async () => {
+    server = app.listen(0);
+  });
 
-//   afterAll(async () => {
-//     server.close();
-//   });
+  afterAll(async () => {
+    server.close();
+  });
 
-//   it('should be able to create a expense', async () => {
-//     await request(server).post('/users/register').send({
-//       name: 'John Doe',
-//       email: 'johndoe@example.com',
-//       password: '123456',
-//     });
+  it('should be able to create a expense', async () => {
+    const cookie = await createAndAuthenticateUser(server);
 
-//     await request(server).post('/users/session').send({
-//       email: 'johndoe@example.com',
-//       password: '123456',
-//     });
-//   });
-// });
+    const response = await request(server)
+      .post('/expenses/create')
+      .set('Cookie', cookie)
+      .send({
+        description: 'First Expense',
+        location: "Nico's Bar",
+        type: 'EXPENSE',
+        amount: 100.0,
+        date: new Date('2024-10-16'),
+        method: 'CREDIT_CARD',
+        category: 'Drinks',
+        user_id: '1234-5678-9101',
+      });
+
+    expect(response.status).toEqual(201);
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        id: expect.any(String),
+        user_id: expect.any(String),
+      }),
+    );
+  });
+});

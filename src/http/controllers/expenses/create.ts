@@ -9,8 +9,8 @@ export async function expenseCreate(req: Request, res: Response) {
     location: z.string(),
     type: z.nativeEnum($Enums.Type),
     amount: z.number(),
-    date: z.date(),
-    userId: z.string(),
+    date: z.coerce.date(),
+    user_id: z.string(),
     method: z.nativeEnum($Enums.Method),
     category: z.string(),
   });
@@ -22,6 +22,7 @@ export async function expenseCreate(req: Request, res: Response) {
 
     const { expense } = await createExpenseUseCase.execute({
       ...expenseBody,
+      date: new Date(expenseBody.date),
       user_id: req.session.user?.id as string,
     });
 

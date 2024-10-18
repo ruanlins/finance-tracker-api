@@ -22,7 +22,7 @@ export async function userAuthenticate(req: Request, res: Response) {
       email: user.email,
     };
 
-    return res.status(200).send();
+    return res.status(200).send(req.session.user);
   } catch (err) {
     if (err instanceof InvalidCredentialsError) {
       return res.status(400).send({ message: err.message });

@@ -1,4 +1,4 @@
-import { createAndAuthenticateUser } from '@/utils/create-and-authenticate-user';
+import { createAndAuthenticateUser } from '@/utils/test/create-and-authenticate-user';
 import { app } from '../../../app';
 import { Server } from 'http';
 import request from 'supertest';

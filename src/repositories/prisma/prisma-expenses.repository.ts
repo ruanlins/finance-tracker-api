@@ -8,9 +8,16 @@ export class PrismaExpensesRepository implements ExpensesRepository {
 
     return expense;
   }
+
   async findByUserId(
     id: string,
-    { page = 1, query, category, month, year }: FindByUserIdParams,
+    {
+      page = 1,
+      query,
+      category,
+      month = new Date().getMonth() + 1,
+      year = new Date().getFullYear(),
+    }: FindByUserIdParams,
   ): Promise<Expense[]> {
     const dateRange = month
       ? {

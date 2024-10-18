@@ -6,7 +6,7 @@ import {
 
 interface GetUserExpensesUseCaseRequest {
   id: string;
-  params: FindByUserIdParams;
+  params?: FindByUserIdParams;
 }
 
 interface GetUserExpensesUseCaseResponse {

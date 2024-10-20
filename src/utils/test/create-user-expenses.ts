@@ -24,7 +24,7 @@ export async function createUserExpenses(app: Server) {
     .post('/expenses/create')
     .send({
       description: 'First Expense',
-      location: 'Nico Bard',
+      location: 'Nico Bar',
       type: 'EXPENSE',
       amount: 100,
       date: '2024-10-16T00:00:00.000Z',

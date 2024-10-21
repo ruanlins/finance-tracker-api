@@ -11,6 +11,7 @@ export interface FindByUserIdParams {
 export interface ExpensesRepository {
   create(data: Prisma.ExpenseUncheckedCreateInput): Promise<Expense>;
   findByUserId(id: string, params?: FindByUserIdParams): Promise<Expense[]>;
+  findById(id: string): Promise<Expense | null>;
   update(data: Prisma.ExpenseUncheckedUpdateInput): Promise<Expense>;
   delete(id: string): Promise<null>;
 }

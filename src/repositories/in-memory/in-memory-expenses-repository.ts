@@ -56,4 +56,8 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
 
     return updatedExpense as Expense;
   }
+
+  async findById(id: string) {
+    return this.items.find((expense) => expense.id === id) || null;
+  }
 }

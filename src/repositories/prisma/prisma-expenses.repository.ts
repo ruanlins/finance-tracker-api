@@ -9,6 +9,12 @@ export class PrismaExpensesRepository implements ExpensesRepository {
     return expense;
   }
 
+  async findById(id: string): Promise<Expense | null> {
+    const expense = await prisma.expense.findUnique({ where: { id } });
+
+    return expense;
+  }
+
   async findByUserId(
     id: string,
     {

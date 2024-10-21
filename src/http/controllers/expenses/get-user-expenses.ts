@@ -5,8 +5,6 @@ export async function expenseUserGet(req: Request, res: Response) {
   try {
     const getUserExpensesUseCase = makeGetUserExpensesUseCase();
 
-    const date = new Date();
-
     const { expenses } = await getUserExpensesUseCase.execute({
       id: req.session.user?.id as string,
       params: { ...req.query },

@@ -1,15 +1,15 @@
 import { expect, describe, it, beforeEach } from 'vitest';
 import { InMemoryExpensesRepository } from '@/repositories/in-memory/in-memory-expenses-repository';
-import { GetExpenseUseCase } from './get-expense';
+import { GetExpenseByIdUseCase } from './get-expense-by-id';
 import exp from 'constants';
 
 let expensesRepository: InMemoryExpensesRepository;
-let sut: GetExpenseUseCase;
+let sut: GetExpenseByIdUseCase;
 
 describe('Get Expense Use Case', () => {
   beforeEach(() => {
     expensesRepository = new InMemoryExpensesRepository();
-    sut = new GetExpenseUseCase(expensesRepository);
+    sut = new GetExpenseByIdUseCase(expensesRepository);
   });
 
   it('should be able to get a expense by id', async () => {

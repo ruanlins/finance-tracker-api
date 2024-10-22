@@ -9,7 +9,7 @@ interface GetExpensesUseCaseResponse {
   expense: Expense | null;
 }
 
-export class GetExpenseUseCase {
+export class GetExpenseByIdUseCase {
   constructor(private expensesRepository: ExpensesRepository) {}
 
   async execute({

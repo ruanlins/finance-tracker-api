@@ -7,5 +7,6 @@ import { expenseUpdate } from '../controllers/expenses/update';
 export const router = express.Router();
 
 router.get('/', verifySession, expenseUserGet);
+router.get('/:id', verifySession, expenseUserGet);
 router.patch('/:id', verifySession, expenseUpdate);
 router.post('/create', verifySession, expenseCreate);

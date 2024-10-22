@@ -1,5 +1,4 @@
 import { makeGetExpenseByIdUseCase } from '@/use-cases/factories/make-get-expense-by-id';
-import { makeGetUserExpensesUseCase } from '@/use-cases/factories/make-get-user-expenses';
 import { Request, Response } from 'express';
 
 export async function expenseGetById(req: Request, res: Response) {

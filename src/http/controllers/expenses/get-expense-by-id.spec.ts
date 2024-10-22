@@ -4,7 +4,7 @@ import request from 'supertest';
 import { afterAll, beforeAll, describe, expect, it } from 'vitest';
 import { createUserExpenses } from '@/utils/test/create-user-expenses';
 
-describe('Get User Expenses Controller', () => {
+describe('Get Expense By Id Controller', () => {
   let server: Server;
   let cookie: string;
 
@@ -25,8 +25,6 @@ describe('Get User Expenses Controller', () => {
     const response = await request(server)
       .get(`/expenses/${getExpenseId.body[0].id}`)
       .set('Cookie', cookie);
-
-    console.log(response.body);
 
     expect(response.status).toEqual(200);
   });

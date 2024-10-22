@@ -19,11 +19,11 @@ describe('Update Expenses Controller', () => {
 
   it('should be able to update a user expense', async () => {
     const expenses = await request(server)
-      .get('/expenses/')
+      .get('/expenses')
       .set('Cookie', cookie);
 
     const response = await request(server)
-      .patch(`/expenses/${expenses.body[0].id}`)
+      .patch(`/expenses/update/${expenses.body[0].id}`)
       .send({
         description: 'Updated description',
       })

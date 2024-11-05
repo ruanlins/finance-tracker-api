@@ -60,4 +60,25 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
   async findById(id: string) {
     return this.items.find((expense) => expense.id === id) || null;
   }
+
+  async getMonthlyValue(id: string) {
+    const filteredArray = this.items.filter((item) => item.user_id === id);
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() - 1;
+    const startDate =
+      month < 0
+        ? new Date(year - 1, 11, today.getDate())
+        : new Date(year, month, today.getDate());
+
+    const sum = filteredArray.reduce((acc, item) => {
+      const data = new Date(item.date);
+      if (data >= startDate && data <= today) {
+        return acc + item.amount;
+      }
+      return acc;
+    }, 0);
+
+    return sum;
+  }
 }

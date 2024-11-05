@@ -1,7 +1,6 @@
 import { expect, describe, it, beforeEach } from 'vitest';
 import { InMemoryExpensesRepository } from '@/repositories/in-memory/in-memory-expenses-repository';
 import { GetExpenseByIdUseCase } from './get-expense-by-id';
-import exp from 'constants';
 
 let expensesRepository: InMemoryExpensesRepository;
 let sut: GetExpenseByIdUseCase;

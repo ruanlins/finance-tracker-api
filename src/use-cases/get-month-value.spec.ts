@@ -1,14 +1,14 @@
 import { expect, describe, it, beforeEach, vi, afterEach } from 'vitest';
 import { InMemoryExpensesRepository } from '@/repositories/in-memory/in-memory-expenses-repository';
-import { GetMonthExpenseByIdUseCase } from './get-month-expense';
+import { GetMonthValueUseCase } from './get-month-value';
 
 let expensesRepository: InMemoryExpensesRepository;
-let sut: GetMonthExpenseByIdUseCase;
+let sut: GetMonthValueUseCase;
 
 describe('Get Month Expense Use Case', () => {
   beforeEach(() => {
     expensesRepository = new InMemoryExpensesRepository();
-    sut = new GetMonthExpenseByIdUseCase(expensesRepository);
+    sut = new GetMonthValueUseCase(expensesRepository);
 
     vi.useFakeTimers();
   });

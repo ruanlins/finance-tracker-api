@@ -1,19 +1,19 @@
 import { ExpensesRepository } from '@/repositories/expenses-repository';
 
-interface GetMonthExpenseUseCaseRequest {
+interface GetMonthValueUseCaseRequest {
   id: string;
 }
 
-interface GetMonthExpensesUseCaseResponse {
+interface GetMonthValueUseCaseResponse {
   value: number;
 }
 
-export class GetMonthExpenseByIdUseCase {
+export class GetMonthValueUseCase {
   constructor(private expensesRepository: ExpensesRepository) {}
 
   async execute({
     id,
-  }: GetMonthExpenseUseCaseRequest): Promise<GetMonthExpensesUseCaseResponse> {
+  }: GetMonthValueUseCaseRequest): Promise<GetMonthValueUseCaseResponse> {
     const value = await this.expensesRepository.getMonthlyValue(id);
 
     return { value };

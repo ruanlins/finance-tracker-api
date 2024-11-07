@@ -5,7 +5,7 @@ import { GetMonthValueUseCase } from './get-month-value';
 let expensesRepository: InMemoryExpensesRepository;
 let sut: GetMonthValueUseCase;
 
-describe('Get Month Expense Use Case', () => {
+describe('Get Month Value Expense Use Case', () => {
   beforeEach(() => {
     expensesRepository = new InMemoryExpensesRepository();
     sut = new GetMonthValueUseCase(expensesRepository);

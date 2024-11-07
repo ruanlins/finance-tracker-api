@@ -81,4 +81,9 @@ export class InMemoryExpensesRepository implements ExpensesRepository {
 
     return sum;
   }
+
+  async getMonthQuantity(id: string) {
+    const filteredArray = this.items.filter((item) => item.user_id === id);
+    return filteredArray.length;
+  }
 }

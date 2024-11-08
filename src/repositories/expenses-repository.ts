@@ -15,4 +15,5 @@ export interface ExpensesRepository {
   update(data: Prisma.ExpenseUncheckedUpdateInput): Promise<Expense>;
   delete(id: string): Promise<null>;
   getMonthlyValue(id: string): Promise<number>;
+  getMonthQuantity(id: string): Promise<number>;
 }

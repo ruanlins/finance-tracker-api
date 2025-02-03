@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  finances-tracker-pg:
+    container_name: finances-tracker-pg
+    image: bitnami/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=docker
+      - POSTGRESQL_PASSWORD=docker
+      - POSTGRESQL_DATABASE=financestrackerpg
+    volumes:
+      - finances-tracker:/bitnami/postgresql
+
+volumes:
+  finances-tracker:
+    name: finances-tracker

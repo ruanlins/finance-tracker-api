@@ -13,9 +13,7 @@ public items:User[] = []
     }
 
     async findById(id: string) {
-        const user = this.items.find((user) => user.id == id)
-
-        if(!user) return null
+        const user = this.items.find((user) => user.id == id) as User
 
         return user
     }

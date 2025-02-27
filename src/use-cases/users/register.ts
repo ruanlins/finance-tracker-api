@@ -23,7 +23,7 @@ export class RegisterUseCase {
 
         const userWithSameEmail = await this.usersRepository.findByEmail(email)
 
-        if(userWithSameEmail) throw new UserAlreadyExistsError
+        if(userWithSameEmail) throw new UserAlreadyExistsError()
 
         const hashedPassword = await hash(password, 6)
 

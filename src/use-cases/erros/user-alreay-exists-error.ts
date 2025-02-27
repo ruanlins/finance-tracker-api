@@ -1,5 +1,5 @@
-export class UserAlreadyExistsError extends Error{
-    constructor(){
-        super('Email já está em uso')
+export class UserAlreadyExistsError extends Error {
+    constructor() {
+      super('User with same email already exists');
     }
-}
+  }

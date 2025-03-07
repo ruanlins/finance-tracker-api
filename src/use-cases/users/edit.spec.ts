@@ -1,7 +1,7 @@
 import { UsersRepository } from "@/repositories/users-repository";
 import { EditUserUseCase } from "./edit";
 import { describe, beforeEach, it, expect } from 'vitest'
-import { InMemomoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
+import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { UserNameTooShortError } from "../erros/user-name-too-short-error";
 
 let usersRepository: UsersRepository
@@ -9,7 +9,7 @@ let sut: EditUserUseCase
 
 describe('Edit Use Case', () => {
     beforeEach(() => {
-        usersRepository = new InMemomoryUsersRepository
+        usersRepository = new InMemoryUsersRepository
         sut = new EditUserUseCase(usersRepository)
     })
 

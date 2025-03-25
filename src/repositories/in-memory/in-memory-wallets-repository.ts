@@ -8,17 +8,13 @@ public items:Wallet[] = []
     async create(data: Prisma.WalletUncheckedCreateInput){
 
         const wallet = {
-            id:'wallet1',
-            name: data.name,
-            status: data.status,
-            total: data.total,
-            user_id: 'user1'
-        } as Wallet
+            ...data as Wallet,
+            id:'wallet1'
+        }
+        this.items.push(wallet)
 
         return wallet
     }
-
-
 
     async findById(id: string) {
         const wallet = this.items.find((wallet) => wallet.id == id) as Wallet
@@ -27,9 +23,14 @@ public items:Wallet[] = []
     }
 
     async findByUserId(id: string) {
-        const wallets = this.items.filter((wallet) => wallet.user_id == id) as Wallet[]
+        const wallets = this.items.filter(wallet => wallet.user_id === id);
+        return wallets;
+    }
+
+    async findByName(name: string) {
+        const wallet = this.items.filter((wallet) => wallet.name == name)
         
-        return wallets
+        return wallet
     }
 
     async edit(data: Wallet) {

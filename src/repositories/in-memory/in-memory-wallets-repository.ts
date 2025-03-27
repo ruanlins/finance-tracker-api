@@ -33,6 +33,7 @@ public items:Wallet[] = []
         return wallet
     }
 
+
     async edit(data: Prisma.WalletUpdateInput, id: string) {
         const walletIndex = this.items.findIndex((wallet) => wallet.id == id)
 
@@ -41,6 +42,7 @@ public items:Wallet[] = []
         if(data.name) this.items[walletIndex].name = data.name as string
         
         return  this.items[walletIndex]
+
 
     }
 

@@ -38,7 +38,6 @@ model Wallet {
   name           String
   total          Decimal
   user_id        String
-  transaction_id String
   status         String
 
   transaction Transaction[]

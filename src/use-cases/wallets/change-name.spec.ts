@@ -6,7 +6,7 @@ import { ChangeNameUseUseCase } from './change-name';
 let walletsRepository: WalletsRepository
 let sut: ChangeNameUseUseCase
 
-describe('Create Wallet Use Case', () => {
+describe('Change Wallet Name Use Case', () => {
     beforeEach(() => {
         walletsRepository = new InMemoryWalletsRepository
         sut = new ChangeNameUseUseCase(walletsRepository)
@@ -23,7 +23,6 @@ describe('Create Wallet Use Case', () => {
         await sut.execute({name: 'Novo nome', id: wallet.id})
 
         expect(wallet.name).toEqual('Novo nome')
-        
+
     })
-      
-    });
+});

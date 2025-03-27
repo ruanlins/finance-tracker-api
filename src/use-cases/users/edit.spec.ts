@@ -7,7 +7,7 @@ import { UserNameTooShortError } from "../erros/user-name-too-short-error";
 let usersRepository: UsersRepository
 let sut: EditUserUseCase
 
-describe('Edit Use Case', () => {
+describe('Edit User Use Case', () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository
         sut = new EditUserUseCase(usersRepository)

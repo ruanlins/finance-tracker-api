@@ -47,7 +47,7 @@ public items:Wallet[] = []
     }
 
     async delete(id: string) {
-        this.items.filter((wallet) => wallet.id !== id)
+        this.items = this.items.filter((wallet) => wallet.id !== id)
 
         return null
     }

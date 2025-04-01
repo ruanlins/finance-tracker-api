@@ -4,14 +4,18 @@ import { describe, beforeEach, it, expect } from 'vitest'
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { UserAlreadyExistsError } from "../erros/user-alreay-exists-error";
 import { compare } from "bcrypt";
+import { WalletsRepository } from "@/repositories/wallets-repository";
+import { InMemoryWalletsRepository } from "@/repositories/in-memory/in-memory-wallets-repository";
 
 let usersRepository: UsersRepository
+let walletsRepository: WalletsRepository
 let sut: RegisterUseCase
 
 describe('Register Use Case', () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository
-        sut = new RegisterUseCase(usersRepository)
+        walletsRepository = new InMemoryWalletsRepository
+        sut = new RegisterUseCase(usersRepository, walletsRepository)
     })
 
     it('should be able to register', async() => {
@@ -53,6 +57,19 @@ describe('Register Use Case', () => {
 
         expect(isPasswordHashed).toBe(true)
 
+      })
+
+      it('should create a wallet upon register', async () => {
+        const {user} = await sut.execute({
+          name: 'John Doe',
+          email: 'johndoe@example.com',
+          password: '123456',
+        });
+
+        const wallet = await walletsRepository.findByUserId(user.id)
+
+        expect(wallet).toHaveLength(1)
+        expect(wallet[0].name).toBe('Minha Carteira')
       })
 
       

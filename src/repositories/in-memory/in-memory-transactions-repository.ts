@@ -7,7 +7,8 @@ public items: Transaction[] = []
      async create(data: Prisma.TransactionUncheckedCreateInput) {
          const transaction = {
               ...data as Transaction,
-              id: 'transaction1'
+              id: 'transaction1',
+              user_id: 'user1'
          } as Transaction
 
          this.items.push(transaction)
@@ -39,10 +40,8 @@ public items: Transaction[] = []
          
      }
 
-     async findByUserId(id: string) {
-          const transactions = this.items.filter(transaction => transaction.id === id) as Transaction[]
-
+     async findByUserId(user_id: string) {
+          const transactions = this.items.filter(transaction => transaction.user_id === user_id) as Transaction[]
           return transactions
-         
-     }
+      }
 }

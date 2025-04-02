@@ -1,30 +1,30 @@
 import { TransactionsRepository } from '@/repositories/transactions-repository'
-import {describe,it,expect, beforeEach} from 'vitest'
-import { CreateTransactionUseCase } from './create'
+import {describe, it, beforeEach, expect} from 'vitest'
+import { DeleteTransactionUseCase } from './delete'
 import { InMemoryTransactionsRepository } from '@/repositories/in-memory/in-memory-transactions-repository'
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { UsersRepository } from '@/repositories/users-repository'
 import { Decimal } from '@prisma/client/runtime/library'
 
-let transactionsRepository: TransactionsRepository
 let usersRepository: UsersRepository
-let sut: CreateTransactionUseCase
+let transactionsRepository: TransactionsRepository
+let sut: DeleteTransactionUseCase
 
-describe('Create Transaction Use Case', () => {
+describe('Delete transaction use case', () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository
         transactionsRepository = new InMemoryTransactionsRepository
-        sut = new CreateTransactionUseCase(transactionsRepository)
+        sut = new DeleteTransactionUseCase(transactionsRepository)
     })
 
-    it('should be able to create a transaction', async() => {
+    it('should be able delete a transaction', async() => {
         await usersRepository.create({
-            name: 'John Doe',
-            email: 'johndoe@example.com',
-            password: '123456',
-        })
-
-        const {transaction} = await sut.execute({
+                    name: 'John Doe',
+                    email: 'johndoe@example.com',
+                    password: '123456',
+                })
+        
+        const transaction = await transactionsRepository.create({
             amount: new Decimal(100.53),
             date: new Date(),
             user_id: 'user1',
@@ -35,7 +35,14 @@ describe('Create Transaction Use Case', () => {
             type: 'Comida',
         })
 
+        await sut.execute({id: transaction.id})
 
-        expect(transaction.amount.toNumber()).toEqual(100.53)
+        const transactions = await transactionsRepository.findByUserId('user1')
+
+        expect(transactions).toHaveLength(0)
+
+
     })
+
+
 })

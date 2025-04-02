@@ -41,7 +41,6 @@ describe('Delete transaction use case', () => {
 
         expect(transactions).toHaveLength(0)
 
-
     })
 
 

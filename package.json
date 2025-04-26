@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "test": "vitest run --dir src/use-cases",
+    "e2e": "vitest run --dir src/http/controllers",
     "start": "node build/server.ts"
   },
   "keywords": [],
@@ -13,11 +14,14 @@
   "description": "",
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
-    "@types/express": "^5.0.0",
+    "@types/cookie-parser": "^1.4.8",
+    "@types/express": "^5.0.1",
     "@types/http-errors": "^2.0.4",
     "@types/jsonwebtoken": "^9.0.9",
+    "@types/supertest": "^6.0.3",
     "prisma": "^6.0.1",
     "supertest": "^7.1.0",
+    "testcontainers": "^10.24.2",
     "tsx": "^4.19.3",
     "typescript": "^5.7.2",
     "vite-tsconfig-paths": "^5.1.4",
@@ -26,8 +30,9 @@
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^16.4.7",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
     "zod": "^3.23.8"

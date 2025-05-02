@@ -26,8 +26,6 @@ describe('Register User e2e test', () => {
 
     expect(res.status).toBe(201)
     expect(res.body.usuario.nome).toBe('John Doe')
-
-    console.log()
   })
 
   it('should not create another user with the same email', async () => {
@@ -36,7 +34,7 @@ describe('Register User e2e test', () => {
       email: 'johndoe@test.com',
       password: 'test@123',
     })
-
+    
     expect(res.status).toBe(409)
   })
 

@@ -37,7 +37,7 @@ export async function userRegister(req:Request, res:Response, next:NextFunction)
     
         const { user } = await registerUseCase.execute({ name, email, password })
     
-        const token = jwt.sign({}, env.JWT_SECRET, { expiresIn: '1d' })
+        const token = jwt.sign({sub: user.id}, env.JWT_SECRET, { expiresIn: '1d' })
     
         res.cookie('token', token, {
           httpOnly: env.NODE_DEV === 'production',

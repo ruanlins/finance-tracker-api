@@ -3,7 +3,7 @@ import {Wallet} from '@prisma/client'
 import { WalletWithSameNameError } from "../erros/wallet-with-same-name-error";
 
 interface CreateWalletUseCaseRequest {
-    name: string
+    name?: string
     total?: number
     status: 'active'
     user_id: string
@@ -15,7 +15,7 @@ interface CreateWalletUseCaseResponse {
 
 export class CreateWalletUseCase {
     constructor(private walletsRepository:WalletsRepository){}
-        async execute({name,status,total = 0, user_id}: CreateWalletUseCaseRequest): Promise<CreateWalletUseCaseResponse> {
+        async execute({name = 'Minha Carteira',status,total = 0, user_id}: CreateWalletUseCaseRequest): Promise<CreateWalletUseCaseResponse> {
 
             const walletWithSameName = (await this.walletsRepository.findByUserId(user_id))
 

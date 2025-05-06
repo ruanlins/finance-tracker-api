@@ -40,8 +40,9 @@ export async function userRegister(req:Request, res:Response, next:NextFunction)
         const token = jwt.sign({sub: user.id}, env.JWT_SECRET, { expiresIn: '1d' })
     
         res.cookie('token', token, {
-          httpOnly: env.NODE_DEV === 'production',
+          httpOnly: true,
           sameSite: 'strict',
+          secure: env.NODE_ENV === 'production',
           maxAge: 1000 * 60 * 60 * 24,
         })
     
@@ -55,8 +56,8 @@ export async function userRegister(req:Request, res:Response, next:NextFunction)
 
       } catch (err) {
         if (err instanceof UserAlreadyExistsError) {
-          throw createHttpError(409, err.message)
+          next(createHttpError(409, err.message))
         }
-        next(err)
+        return next(err)
       }
   }

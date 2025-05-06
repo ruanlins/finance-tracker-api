@@ -30,11 +30,12 @@ export async function userAuthenticate(req: Request, res: Response, next:NextFun
 
       const {user} = await authenticateUseCase.execute({email, password})
 
-      const token = jwt.sign({sub: user.id}, env.JWT_SECRET, { expiresIn: '1d' })
+      const token = jwt.sign({sub: user.id}, env.JWT_SECRET, { expiresIn: '1d'})
 
       res.cookie('token', token, {
-        httpOnly: env.NODE_DEV === 'production',
+        httpOnly: true,
         sameSite: 'strict',
+        secure: env.NODE_ENV === 'production',
         maxAge: 1000 * 60 * 60 * 24,
       })
 
@@ -49,8 +50,8 @@ export async function userAuthenticate(req: Request, res: Response, next:NextFun
       
     } catch (err) {
       if(err instanceof InvalidCredentialsError){
-        createHttpError(401, err.message)
+        return next(createHttpError(401, err.message))
       }
-      next(err)
+      return next(err)
     }
 }

@@ -26,7 +26,6 @@ describe('Logout User e2e test', () => {
 
     const res = await request(app).post('/users/logout')
 
-    console.log(res.status)
     expect(res.status).toBe(200)
     expect(res.body.mensagem).toBe('Usuário deslogado com sucesso.')
 

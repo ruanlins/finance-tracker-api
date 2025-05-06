@@ -11,6 +11,6 @@ export async function userLogout(req: Request, res:Response, next:NextFunction) 
         res.status(200).json({mensagem:'Usuário deslogado com sucesso.'})
         
     } catch (err) {
-        next(err)
+        return(next(err))
     }
 }

@@ -34,7 +34,4 @@ describe('Authenticate User e2e test', () => {
     expect(res.status).toBe(200)
     expect(res.body.mensagem).toBe('Login efetuado com sucesso.')
   })
-
-  
-
 })

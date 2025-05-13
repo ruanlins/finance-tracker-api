@@ -1,7 +1,7 @@
-import { StartedTestContainer, GenericContainer } from 'testcontainers'
-import { execSync } from 'child_process'
+import { StartedTestContainer, GenericContainer } from 'testcontainers';
+import { execSync } from 'child_process';
 
-let container: StartedTestContainer
+let container: StartedTestContainer;
 
 export async function startTestDatabase() {
   container = await new GenericContainer('postgres:alpine')
@@ -11,19 +11,19 @@ export async function startTestDatabase() {
       POSTGRES_DB: 'testdb',
     })
     .withExposedPorts(5432)
-    .start()
+    .start();
 
-  const port = container.getMappedPort(5432)
-  const host = container.getHost()
+  const port = container.getMappedPort(5432);
+  const host = container.getHost();
 
-  process.env.DATABASE_URL = `postgresql://test:test@${host}:${port}/testdb`
-  process.env.JWT_SECRET = 'test-secret'
-  process.env.NODE_DEV = 'test'
+  process.env.DATABASE_URL = `postgresql://test:test@${host}:${port}/testdb`;
+  process.env.JWT_SECRET = 'test-secret';
+  process.env.NODE_DEV = 'dev';
 
-  execSync('npx prisma generate', { stdio: 'inherit' })
-  execSync('npx prisma migrate deploy', { stdio: 'inherit' })
+  execSync('npx prisma generate', { stdio: 'inherit' });
+  execSync('npx prisma migrate deploy', { stdio: 'inherit' });
 }
 
 export async function stopTestDatabase() {
-  if (container) await container.stop()
+  if (container) await container.stop();
 }

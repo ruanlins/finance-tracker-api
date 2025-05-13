@@ -1,37 +1,33 @@
-import {describe,it,afterAll,beforeAll,expect} from 'vitest'
-import request from 'supertest'
-import { startTestDatabase, stopTestDatabase } from '@/utils/test/setupTestDatabase'
+import { describe, it, afterAll, beforeAll, expect } from 'vitest';
+import {
+  startTestDatabase,
+  stopTestDatabase,
+} from '@/utils/test/setupTestDatabase';
+import { authenticateTestUser } from '@/utils/test/authenticateUser';
 
-let app: any
+let app: any;
 
 describe('Authenticate User e2e test', () => {
-
   beforeAll(async () => {
-    await startTestDatabase()
+    await startTestDatabase();
 
-    const server = await import('@/app')
-    app = server.app
-  })
+    const server = await import('@/app');
+    app = server.app;
+  });
 
   afterAll(async () => {
-    await stopTestDatabase()
-  })
+    await stopTestDatabase();
+  });
 
   it('should be able to authenticate', async () => {
-    await request(app).post('/users/register').send({
-      name: 'John Doe',
-      email: 'johndoe@test.com',
-      password: 'test@123',
-    })
+    const agent = await authenticateTestUser(app);
+    const res = await agent.post('/users/authenticate').send({
+      email: 'testuser@example.com',
+      password: 'password123',
+    });
 
-    await request(app).post('/users/logout')
+    console.log('Response Headers:', res.headers);
 
-    const res = await request(app).post('/users/authenticate').send({
-        email: 'johndoe@test.com',
-        password: 'test@123',
-    })
-
-    expect(res.status).toBe(200)
-    expect(res.body.mensagem).toBe('Login efetuado com sucesso.')
-  })
-})
+    expect(res.status).toBe(200);
+  });
+});

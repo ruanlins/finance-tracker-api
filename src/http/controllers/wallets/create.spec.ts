@@ -1,6 +1,6 @@
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 import request from 'supertest';
-import { startTestDatabase, stopTestDatabase } from '@/utils/test/setupTestDatabase';
+import { clearDataBase} from '@/utils/test/setupTestDatabase';
 import { authenticateTestUser } from '@/utils/test/authenticateUser';
 
 let app: any;
@@ -8,7 +8,6 @@ let agent: ReturnType<typeof request.agent>
 
 describe('Create Wallet e2e test', () => {
   beforeAll(async () => {
-    await startTestDatabase();
     const server = await import('@/app');
     app = server.app;
 
@@ -16,7 +15,7 @@ describe('Create Wallet e2e test', () => {
   });
 
   afterAll(async () => {
-    await stopTestDatabase();
+    clearDataBase();
   });
 
   it('should be able to create a wallet', async () => {

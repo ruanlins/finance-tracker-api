@@ -1,6 +1,5 @@
 import {describe,it,afterAll,beforeAll,expect} from 'vitest'
-import request from 'supertest'
-import { startTestDatabase, stopTestDatabase } from '@/utils/test/setupTestDatabase'
+import { clearDataBase } from '@/utils/test/setupTestDatabase'
 import { authenticateTestUser } from '@/utils/test/authenticateUser'
 
 let app: any
@@ -8,14 +7,12 @@ let app: any
 describe('Logout User e2e test', () => {
 
   beforeAll(async () => {
-    await startTestDatabase()
-
     const server = await import('@/app')
     app = server.app
   })
 
   afterAll(async () => {
-    await stopTestDatabase()
+    await clearDataBase()
   })
 
   it('should be able to logout', async () => {

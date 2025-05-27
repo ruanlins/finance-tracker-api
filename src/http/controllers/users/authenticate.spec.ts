@@ -1,7 +1,6 @@
 import { describe, it, afterAll, beforeAll, expect } from 'vitest';
 import {
-  startTestDatabase,
-  stopTestDatabase,
+  clearDataBase
 } from '@/utils/test/setupTestDatabase';
 import { authenticateTestUser } from '@/utils/test/authenticateUser';
 
@@ -9,14 +8,12 @@ let app: any;
 
 describe('Authenticate User e2e test', () => {
   beforeAll(async () => {
-    await startTestDatabase();
-
     const server = await import('@/app');
     app = server.app;
   });
 
   afterAll(async () => {
-    await stopTestDatabase();
+    await clearDataBase()
   });
 
   it('should be able to authenticate', async () => {
@@ -26,7 +23,6 @@ describe('Authenticate User e2e test', () => {
       password: 'password123',
     });
 
-    console.log('Response Headers:', res.headers);
 
     expect(res.status).toBe(200);
   });

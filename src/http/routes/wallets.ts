@@ -1,6 +1,7 @@
 import express from 'express'
 import { authMiddleware } from '../middlewares/authMiddleware'
 import { walletCreate } from '../controllers/wallets/create'
+
 import { walletChangeName } from '../controllers/wallets/change-name'
 
 export const router = express.Router()

@@ -1,7 +1,9 @@
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 import request from 'supertest';
+
 import { clearDataBase} from '@/utils/test/setupTestDatabase';
 import { authenticateTestUser } from '@/utils/test/authenticateUser';
+
 
 let app: any;
 let agent: ReturnType<typeof request.agent>
@@ -15,11 +17,13 @@ describe('Create Wallet e2e test', () => {
   });
 
   afterAll(async () => {
+
     clearDataBase();
   });
 
   it('should be able to create a wallet', async () => {
     const agent = await authenticateTestUser(app)
+
     const res = await agent.post('/wallets/create').send({
       name: 'Minha carteira',
       total: 1000,
@@ -27,6 +31,7 @@ describe('Create Wallet e2e test', () => {
 
     expect(res.status).toBe(201);
   });
+
 
   it('should not be able to create a wallet with the same name', async () => {
    await agent.post('/users/authenticate').send({
@@ -41,5 +46,4 @@ describe('Create Wallet e2e test', () => {
 
     expect(res.status).toBe(409)
   })
-  
-});
+  });

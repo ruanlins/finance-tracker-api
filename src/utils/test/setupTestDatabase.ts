@@ -30,7 +30,6 @@ export async function startTestDatabase() {
 export async function stopTestDatabase() {
   if (container) await container.stop()
 }
-
 export async function clearDataBase() {
   const { prisma } = await import('@/lib/prisma.js')
   await prisma.wallet.deleteMany();

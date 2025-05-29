@@ -1,5 +1,6 @@
 import { StartedTestContainer, GenericContainer } from 'testcontainers'
 import { execSync } from 'child_process'
+import waitPort from 'wait-port'
 
 let container: StartedTestContainer
 
@@ -20,10 +21,18 @@ export async function startTestDatabase() {
   process.env.JWT_SECRET = 'test-secret'
   process.env.NODE_DEV = 'test'
 
+  await waitPort({ host, port, timeout: 10000 })
+
   execSync('npx prisma generate', { stdio: 'inherit' })
   execSync('npx prisma migrate deploy', { stdio: 'inherit' })
 }
 
 export async function stopTestDatabase() {
   if (container) await container.stop()
+}
+export async function clearDataBase() {
+  const { prisma } = await import('@/lib/prisma.js')
+  await prisma.wallet.deleteMany();
+  await prisma.user.deleteMany();
+  await prisma.transaction.deleteMany();
 }

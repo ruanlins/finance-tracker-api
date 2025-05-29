@@ -27,8 +27,9 @@ public items:Wallet[] = []
         return wallets;
     }
 
-    async findByName(name: string) {
-        const wallet = this.items.filter((wallet) => wallet.name == name)
+    async findByName(id: string, name: string) {
+        const filteredwallet = this.items.filter((wallet) => wallet.name == name)
+        const wallet = filteredwallet.find((wallet) => wallet.user_id === id) || null
         
         return wallet
     }

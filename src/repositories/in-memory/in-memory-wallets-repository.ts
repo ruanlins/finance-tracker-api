@@ -35,16 +35,14 @@ public items:Wallet[] = []
     }
 
 
-    async edit(data: Prisma.WalletUpdateInput, id: string) {
-        const walletIndex = this.items.findIndex((wallet) => wallet.id == id)
+    async edit(data: Prisma.WalletUpdateInput, wallet_id: string) {
+        const walletIndex = this.items.findIndex((wallet) => wallet.id == wallet_id)
 
         if(data.total) this.items[walletIndex].total = data.total as Prisma.Decimal
 
         if(data.name) this.items[walletIndex].name = data.name as string
         
         return  this.items[walletIndex]
-
-
     }
 
     async delete(id: string) {

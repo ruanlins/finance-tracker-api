@@ -6,7 +6,7 @@ import { authenticateTestUser } from '@/utils/test/authenticateUser';
 let app: any;
 let agent: ReturnType<typeof request.agent>
 
-describe('Edit Wallet e2e test', () => {
+describe('Edit Wallet Name e2e test', () => {
   beforeAll(async () => {
     const server = await import('@/app');
     app = server.app;
@@ -25,7 +25,7 @@ describe('Edit Wallet e2e test', () => {
       total: 1000,
     });
 
-    const res = await agent.patch(`/wallets/edit/${resCreate.body.wallet.id}`).send({ name: 'Novo nome de carteira' })
+    const res = await agent.patch(`/wallets/edit-name/${resCreate.body.wallet.id}`).send({ name: 'Novo nome de carteira' })
 
     expect(res.status).toBe(200);
   });
@@ -41,7 +41,7 @@ describe('Edit Wallet e2e test', () => {
       total: 1000,
     });
 
-    const res = await agent.patch(`/wallets/edit/${resCreate.body.wallet.id}`).send({ name: 'Minha Carteira' })
+    const res = await agent.patch(`/wallets/edit-name/${resCreate.body.wallet.id}`).send({ name: 'Minha Carteira' })
 
     expect(res.status).toBe(409)
   })

@@ -3,7 +3,7 @@ import {Wallet} from '@prisma/client'
 
 interface SetValueUseCaseRequest {
     total: number
-    id: string
+    wallet_id: string
 }
 
 interface SetValueUseCaseResponse {
@@ -12,11 +12,11 @@ interface SetValueUseCaseResponse {
 
 export class SetValueUseUseCase {
     constructor(private walletsRepository:WalletsRepository){}
-        async execute({total, id}: SetValueUseCaseRequest): Promise<SetValueUseCaseResponse> {
+        async execute({total,wallet_id}: SetValueUseCaseRequest): Promise<SetValueUseCaseResponse> {
 
             const wallet = await this.walletsRepository.edit({
                 total
-            }, id)
+            }, wallet_id)
 
             return {wallet}
     }

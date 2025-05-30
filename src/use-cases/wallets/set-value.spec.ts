@@ -20,7 +20,7 @@ describe('Set Value Use Case', () => {
             user_id : 'user-1',
         })
 
-        await sut.execute({total: 1000, id: wallet.id})
+        await sut.execute({total: 1000, wallet_id: wallet.id})
 
         expect(wallet.total).toEqual(1000)
         

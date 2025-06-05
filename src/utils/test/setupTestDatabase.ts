@@ -12,6 +12,7 @@ export async function startTestDatabase() {
       POSTGRES_DB: 'testdb',
     })
     .withExposedPorts(5432)
+    .withReuse()
     .start()
 
   const port = container.getMappedPort(5432)
@@ -32,7 +33,7 @@ export async function stopTestDatabase() {
 }
 export async function clearDataBase() {
   const { prisma } = await import('@/lib/prisma.js')
-  await prisma.wallet.deleteMany();
-  await prisma.user.deleteMany();
-  await prisma.transaction.deleteMany();
+  await prisma.$executeRawUnsafe(`
+  TRUNCATE TABLE "Transaction", "Wallet", "User" RESTART IDENTITY CASCADE;
+`);
 }

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "test": "TEST_ENV=unit vitest run --dir src/use-cases",
-    "e2e": "TEST_ENV=e2e vitest run --dir src/http/controllers ",
+    "e2e": "TEST_ENV=e2e vitest run --dir src/http/controllers",
     "start": "node build/server.ts"
   },
   "type": "module",

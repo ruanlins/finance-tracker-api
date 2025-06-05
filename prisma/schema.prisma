@@ -7,6 +7,30 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TransactionType {
+  SAIDA
+  ENTRADA
+}
+
+enum TransactionMethod {
+  CREDITO
+  DEBITO
+  PIX
+}
+
+enum TransactionCategory {
+  COMIDA
+  MERCADO
+  PET
+  COMBUSTIVEL
+  MECANICO
+  JOGOS
+  BEBIDA
+  OUTROS
+  LAZER
+  ELETRONICO
+}
+
 model User {
   id          String        @id @default(cuid())
   email       String        @unique
@@ -22,10 +46,11 @@ model Transaction {
   id          String   @id @default(cuid())
   amount      Decimal
   description String
-  location    String
-  category    String
-  date        DateTime
-  type        String
+  location    String?
+  category    TransactionCategory
+  date        DateTime? @default(now())
+  type        TransactionType
+  method      TransactionMethod
   user_id     String
   wallet_id   String
 

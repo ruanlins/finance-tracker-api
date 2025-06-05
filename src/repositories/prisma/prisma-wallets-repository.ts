@@ -39,4 +39,13 @@ export class PrismaWalletsRepository implements WalletsRepository {
         return null
     }
 
+    async updateBalance(amount: number, wallet_id: string, type: string): Promise<null> {
+
+
+        await prisma.wallet.update({ where: { id: wallet_id }, data: { total: type === 'SAIDA' ? -amount : amount } })
+
+
+        return null
+    }
+
 }

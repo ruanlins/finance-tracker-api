@@ -51,5 +51,17 @@ public items:Wallet[] = []
         return null
     }
 
+    async updateBalance(amount: number, wallet_id: string, type: string) {
+
+        const wallet = this.items.find(wallet => wallet.id === wallet_id)
+        if(!wallet)return null
+
+        const value = type === 'SAIDA' ? -amount : amount
+
+        wallet.total = wallet.total.plus(value)
+        
+        return null
+    }
+
 
 }

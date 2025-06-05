@@ -9,5 +9,9 @@ export default defineConfig({
     globals: true,
     hookTimeout: 30000,
     setupFiles: isE2E ? ['./src/utils/test/vitestSetup.js'] : [],
-    },
+    sequence: {
+      concurrent: false
+    }
+  },
+
 })

@@ -23,10 +23,11 @@ describe('Edit transaction Use Case', () => {
             date: new Date(),
             user_id: 'user1',
             wallet_id: 'wallet1',
-            category: 'Teste Cat',
+            category: 'COMIDA',
             description: 'Comida',
             location: 'Lattiera',
-            type: 'Comida',
+            type: 'SAIDA',
+            method: 'CREDITO',
         });
 
         const updatedTransaction = await sut.execute({
@@ -35,15 +36,15 @@ describe('Edit transaction Use Case', () => {
                 amount: new Decimal(200.75),
                 description: 'Supermercado',
                 location: 'Mercado Central',
-                category: 'Alimentação',
-                type: 'Mercado'
+                category: 'MECANICO',
+                type: 'SAIDA'
             }
         });
 
         expect(updatedTransaction.transaction.amount.toNumber()).toBe(200.75);
         expect(updatedTransaction.transaction.description).toBe('Supermercado');
         expect(updatedTransaction.transaction.location).toBe('Mercado Central');
-        expect(updatedTransaction.transaction.category).toBe('Alimentação');
-        expect(updatedTransaction.transaction.type).toBe('Mercado');
+        expect(updatedTransaction.transaction.category).toBe('MECANICO');
+        expect(updatedTransaction.transaction.type).toBe('SAIDA');
     });
 })

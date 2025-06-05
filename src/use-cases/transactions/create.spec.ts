@@ -5,8 +5,11 @@ import { InMemoryTransactionsRepository } from '@/repositories/in-memory/in-memo
 import { InMemoryUsersRepository } from '@/repositories/in-memory/in-memory-users-repository'
 import { UsersRepository } from '@/repositories/users-repository'
 import { Decimal } from '@prisma/client/runtime/library'
+import { InMemoryWalletsRepository } from '@/repositories/in-memory/in-memory-wallets-repository'
+import { WalletsRepository } from '@/repositories/wallets-repository'
 
 let transactionsRepository: TransactionsRepository
+let walletsRepository: WalletsRepository
 let usersRepository: UsersRepository
 let sut: CreateTransactionUseCase
 
@@ -14,7 +17,8 @@ describe('Create Transaction Use Case', () => {
     beforeEach(() => {
         usersRepository = new InMemoryUsersRepository
         transactionsRepository = new InMemoryTransactionsRepository
-        sut = new CreateTransactionUseCase(transactionsRepository)
+        walletsRepository = new InMemoryWalletsRepository
+        sut = new CreateTransactionUseCase(transactionsRepository, walletsRepository)
     })
 
     it('should be able to create a transaction', async() => {
@@ -25,17 +29,18 @@ describe('Create Transaction Use Case', () => {
         })
 
         const {transaction} = await sut.execute({
-            amount: new Decimal(100.53),
+            amount: 100.53,
             date: new Date(),
             user_id: 'user1',
             wallet_id: 'wallet1',
-            category: 'Teste Cat',
+            category: 'COMIDA',
             description: 'Comida',
             location: 'Lattiera',
-            type: 'Comida',
+            method: 'CREDITO',
+            type: 'SAIDA',
         })
 
 
-        expect(transaction.amount.toNumber()).toEqual(100.53)
+        expect(transaction.amount).toEqual(100.53)
     })
 })

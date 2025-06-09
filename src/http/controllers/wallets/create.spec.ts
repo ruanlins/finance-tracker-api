@@ -1,6 +1,5 @@
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 import request from 'supertest';
-
 import { clearDataBase} from '@/utils/test/setupTestDatabase';
 import { authenticateTestUser } from '@/utils/test/authenticateUser';
 

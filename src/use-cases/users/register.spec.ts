@@ -28,7 +28,7 @@ describe('Register Use Case', () => {
         expect(user.id).toEqual(expect.any(String))
     })
 
-    it('should nott be able to register a user with an already registered email', async () => {
+    it('should not be able to register a user with an already registered email', async () => {
       const email = 'johndoe@email.com';
   
       await sut.execute({

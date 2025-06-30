@@ -36,8 +36,7 @@ describe('Create Transactions E2E', () => {
             type: 'SAIDA',
             wallet_id: resWallet.body.wallet.id
         })
-
-        console.error(res.body)
+        
         expect(res.status).toBe(201)
     })
 

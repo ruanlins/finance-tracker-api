@@ -29,13 +29,15 @@ describe('Delete transaction use case', () => {
             date: new Date(),
             user_id: 'user1',
             wallet_id: 'wallet1',
-            category: 'Teste Cat',
+            category: 'COMIDA',
             description: 'Comida',
             location: 'Lattiera',
-            type: 'Comida',
+            type: 'SAIDA',
+            method: 'CREDITO',
+            id:'transaction1'
         })
 
-        await sut.execute({id: transaction.id})
+        await sut.execute({transaction_id: 'transaction1', user_id:'user1'})
 
         const transactions = await transactionsRepository.findByUserId('user1')
 

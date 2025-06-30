@@ -24,8 +24,6 @@ describe('Get Wallets Unit Test', () => {
             password: 'password123'
         })
 
-        console.log(user)
-
         await walletsRepository.create({
             name: 'Minha Carteira',
             status: 'active',

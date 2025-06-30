@@ -7,13 +7,12 @@ public items: Transaction[] = []
      async create(data: Prisma.TransactionUncheckedCreateInput) {
          const transaction = {
               ...data as Transaction,
-              id: 'transaction1',
-              user_id: 'user1'
-         } as Transaction
+         }
 
          this.items.push(transaction)
 
          return transaction
+
 
      }
 

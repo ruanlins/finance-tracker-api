@@ -27,8 +27,6 @@ describe('Get Wallet E2E test', () => {
             total: 1000,
         })
 
-        console.log(createWalletRes.body)
-
         const res = await agent.get(`/wallets/get-wallet/${createWalletRes.body.wallet.id}`)
 
         expect(res.body).toMatchObject({

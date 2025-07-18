@@ -7,7 +7,6 @@ export function errorHandler(err: HttpError | Error, req: Request, res: Response
 
   const response: any = { status, message };
 
-  // Se tiver "details", adiciona.
   if ('details' in err) {
     response.details = (err as any).details;
   }

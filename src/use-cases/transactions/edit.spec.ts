@@ -1,10 +1,11 @@
 import { TransactionsRepository } from "@/repositories/transactions-repository";
 import { UsersRepository } from "@/repositories/users-repository";
 import { EditTransactionUseCase } from "./edit";
-import {describe, it, expect, beforeEach} from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { InMemoryTransactionsRepository } from "@/repositories/in-memory/in-memory-transactions-repository";
 import { Decimal } from "@prisma/client/runtime/library";
+import { UnauthorizedError } from "../erros/unauthorized- error";
 
 let usersRepository: UsersRepository
 let transactionsRepository: TransactionsRepository
@@ -37,8 +38,10 @@ describe('Edit transaction Use Case', () => {
                 description: 'Supermercado',
                 location: 'Mercado Central',
                 category: 'MECANICO',
-                type: 'SAIDA'
-            }
+                type: 'SAIDA',
+                user_id: 'user1'
+            },
+            user_id: 'user1'
         });
 
         expect(updatedTransaction.transaction.amount.toNumber()).toBe(200.75);
@@ -47,4 +50,37 @@ describe('Edit transaction Use Case', () => {
         expect(updatedTransaction.transaction.category).toBe('MECANICO');
         expect(updatedTransaction.transaction.type).toBe('SAIDA');
     });
+
+    it('Should not be able to edit a transaction that you are not the owner', async () => {
+        const transaction = await transactionsRepository.create({
+            amount: new Decimal(100.53),
+            date: new Date(),
+            user_id: 'user1',
+            wallet_id: 'wallet1',
+            category: 'COMIDA',
+            description: 'Comida',
+            location: 'Lattiera',
+            type: 'SAIDA',
+            method: 'CREDITO',
+        })
+        
+
+        await expect(() =>
+            sut.execute({
+                request: {
+                    amount: new Decimal(100.53),
+                    date: new Date(),
+                    user_id: 'user1',
+                    wallet_id: 'wallet1',
+                    category: 'COMIDA',
+                    description: 'Comida',
+                    location: 'Lattiera',
+                    type: 'SAIDA',
+                    method: 'CREDITO',
+                    id: transaction.id
+                },
+                user_id: 'user'
+            }),
+        ).rejects.toBeInstanceOf(UnauthorizedError);
+    })
 })

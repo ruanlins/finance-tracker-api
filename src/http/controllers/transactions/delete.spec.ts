@@ -11,7 +11,6 @@ describe('Delete Transaction E2E test', () => {
         const server = await import('@/app')
         app = server.app
 
-        agent = request.agent(app)
         agent = await authenticateTestUser(app)
     })
 
@@ -32,8 +31,6 @@ describe('Delete Transaction E2E test', () => {
         })
 
         const res = await agent.delete(`/transactions/delete/${resTransaction.body.transaction.id}`)
-
-        console.log(resTransaction.body.transaction.id)
 
         expect(res.body).toBe('Transação apagada com sucesso.')
         expect(res.status).toBe(200)

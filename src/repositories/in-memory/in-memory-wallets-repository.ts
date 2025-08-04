@@ -1,5 +1,6 @@
 import { Prisma, Wallet } from '@prisma/client'
 import {WalletsRepository} from '../wallets-repository'
+import { Decimal } from '@prisma/client/runtime/library'
 
 export class InMemoryWalletsRepository implements WalletsRepository
  {
@@ -9,7 +10,8 @@ public items:Wallet[] = []
 
         const wallet = {
             ...data as Wallet,
-            id:'wallet1'
+            id:'wallet1',
+            total: new Decimal(Number(data.total ?? 0)).toDecimalPlaces(2),
         }
         this.items.push(wallet)
 
@@ -58,7 +60,7 @@ public items:Wallet[] = []
 
         const value = type === 'SAIDA' ? -amount : amount
 
-        wallet.total = wallet.total.plus(value)
+        wallet.total = wallet.total.plus(new Decimal(value).toDecimalPlaces(2))
         
         return null
     }

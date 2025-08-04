@@ -22,7 +22,7 @@ describe('Create Wallet Use Case', () => {
         })
 
         expect(wallet.id).toEqual(expect.any(String))
-        expect(wallet.total).toEqual(0)
+        expect(wallet.total.toNumber()).toEqual(0)
     })
 
     it('should be able to create a wallet with any total', async() => {
@@ -34,7 +34,7 @@ describe('Create Wallet Use Case', () => {
         })
 
         expect(wallet.id).toEqual(expect.any(String))
-        expect(wallet.total).toBeGreaterThan(0)
+        expect(wallet.total.toNumber()).toBeGreaterThan(0)
     })
 
     it('should not be able to create a wallet with same name of another one', async() => {

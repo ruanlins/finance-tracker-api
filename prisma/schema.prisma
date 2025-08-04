@@ -48,7 +48,7 @@ model Transaction {
   description String
   location    String?
   category    TransactionCategory
-  date        DateTime? @default(now())
+  date        DateTime @default(now())
   type        TransactionType
   method      TransactionMethod
   user_id     String

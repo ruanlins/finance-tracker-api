@@ -15,4 +15,5 @@ export interface TransactionsRepository {
     create(data: Prisma.TransactionUncheckedCreateInput): Promise<Transaction>
     edit(id: string,data: Prisma.TransactionUpdateInput): Promise<Transaction>
     delete(id: string): Promise<null>
+    getMonthCategoriesTransactions(user_id: string, month: number, year: number): Promise<{ [key: string]: number }|0>
 }

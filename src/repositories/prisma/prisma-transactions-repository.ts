@@ -1,6 +1,7 @@
 import { Transaction, Prisma } from "@prisma/client";
 import { TransactionsRepository } from "../transactions-repository";
 import { prisma } from "@/lib/prisma";
+import { Decimal } from "@prisma/client/runtime/library";
 
 export class PrismaTransactionsRepository implements TransactionsRepository {
     async findById(id: string): Promise<Transaction | null> {
@@ -52,4 +53,29 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
         return total._sum.amount?.toNumber() ?? 0
     }
 
+    async getMonthCategoriesTransactions(user_id: string, month: number, year: number): Promise<{ [key: string]: number; } | 0> {
+
+        const transactions = await prisma.transaction.groupBy({
+            by: ['category'],
+            where: {
+                user_id,
+                date:{
+                    gte: new Date(year,month,1),
+                    lte: new Date(year,month + 1, 0)
+                }
+            },
+            _sum: {
+                amount: true
+            }
+        })
+
+        if (transactions.length === 0) return 0
+
+        return Object.fromEntries(
+            transactions.map(transaction => [
+                transaction.category,
+                new Decimal(transaction._sum.amount || 0).toDecimalPlaces(2).toNumber()
+            ])
+        )
+    }
 }

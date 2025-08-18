@@ -48,7 +48,7 @@ export class InMemoryTransactionsRepository implements TransactionsRepository {
      async getMonthTotalExpenses(id: string, month: number, year: number) {
           const transactions = this.items.filter(transaction =>
                transaction.user_id === id &&
-               transaction.date?.getMonth() === month - 1 &&
+               transaction.date?.getMonth() === month &&
                transaction.date?.getFullYear() === year
           )
 
@@ -58,5 +58,36 @@ export class InMemoryTransactionsRepository implements TransactionsRepository {
           }
 
           return total.toDecimalPlaces(2).toNumber()
+     }
+
+     async getMonthCategoriesTransactions(user_id: string, month: number, year: number) {
+          const transactions = this.items.filter(transaction =>
+               transaction.user_id === user_id &&
+               transaction.date?.getMonth() === month &&
+               transaction.date?.getFullYear() === year
+          )
+
+          if (transactions.length === 0) return 0
+
+          const categoriesRecord: Record<string, Decimal> = {}
+
+          for (const transaction of transactions) {
+               if (!categoriesRecord[transaction.category]) {
+                    categoriesRecord[transaction.category] = new Decimal(0)
+               }
+
+               categoriesRecord[transaction.category] = categoriesRecord[transaction.category].plus(transaction.amount)
+          }
+
+          const categories = Object.fromEntries(
+               Object.entries(categoriesRecord).map(([key, value]) =>
+                    [key,
+                         value.toDecimalPlaces(2).toNumber()
+                    ]
+               )
+          )
+
+          return categories
+
      }
 }

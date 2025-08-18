@@ -1,18 +1,14 @@
 import { TransactionsRepository } from "@/repositories/transactions-repository";
-import { UsersRepository } from "@/repositories/users-repository";
 import { GetMonthTransactionsUseCase } from "./get-month-transactions";
 import { beforeEach, describe, expect, it } from "vitest";
-import { InMemoryUsersRepository } from "@/repositories/in-memory/in-memory-users-repository";
 import { InMemoryTransactionsRepository } from "@/repositories/in-memory/in-memory-transactions-repository";
 import { Decimal } from "@prisma/client/runtime/library";
 
-let usersRepository: UsersRepository
 let transactionsRepository: TransactionsRepository
 let sut: GetMonthTransactionsUseCase
 
 describe('Get Month Transactions Use Case', () => {
     beforeEach(() => {
-        usersRepository = new InMemoryUsersRepository
         transactionsRepository = new InMemoryTransactionsRepository
         sut = new GetMonthTransactionsUseCase(transactionsRepository)
     })

@@ -1,5 +1,5 @@
 import { Prisma, Transaction } from "@prisma/client";
-import { TransactionsRepository } from "../transactions-repository";
+import { FindByUserIdParams, TransactionsRepository } from "../transactions-repository";
 import { Decimal } from "@prisma/client/runtime/library";
 
 export class InMemoryTransactionsRepository implements TransactionsRepository {
@@ -40,8 +40,21 @@ export class InMemoryTransactionsRepository implements TransactionsRepository {
 
      }
 
-     async findByUserId(user_id: string) {
-          const transactions = this.items.filter(transaction => transaction.user_id === user_id) as Transaction[]
+     async findByUserId(user_id: string, params: FindByUserIdParams = {}) {
+          const allTransactions = this.items.filter(transaction => {
+               if (transaction.user_id !== user_id) return false;
+               if (params.month != null && transaction.date.getMonth() !== params.month) return false;
+               if (params.year != null && transaction.date.getFullYear() !== params.year) return false;
+               if (params.category != null && transaction.category !== params.category) return false;
+               return true;
+          }
+          ) as Transaction[]
+
+          const offset = params.offset || 20
+          const page = params.page || 1
+
+          const transactions = allTransactions.slice(offset * (page - 1), offset * page)
+
           return transactions
      }
 

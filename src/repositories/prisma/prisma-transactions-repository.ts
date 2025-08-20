@@ -1,5 +1,5 @@
 import { Transaction, Prisma } from "@prisma/client";
-import { TransactionsRepository } from "../transactions-repository";
+import { FindByUserIdParams, TransactionsRepository } from "../transactions-repository";
 import { prisma } from "@/lib/prisma";
 import { Decimal } from "@prisma/client/runtime/library";
 
@@ -10,8 +10,28 @@ export class PrismaTransactionsRepository implements TransactionsRepository {
         return transaction
     }
 
-    async findByUserId(id: string): Promise<Transaction[]> {
-        const transactions = prisma.transaction.findMany({ where: { user_id: id } })
+    async findByUserId(id: string, params:FindByUserIdParams): Promise<Transaction[]> {
+        const {month, year,query, offset,category,page} = params
+
+        let dateFilter: {gte: Date; lte:Date} | undefined
+
+        if(month != null && year != null) {
+            const startDate = new Date(year,month-1, 1)
+            const endDate = new Date(year, month, 0)
+            dateFilter = { gte: startDate, lte: endDate }
+        }
+
+        const transactions = prisma.transaction.findMany(
+            { where: 
+                { user_id: id,
+                  date: dateFilter,
+                  description: query ? { contains: query, mode: 'insensitive' } : undefined,
+                  category: category ? { equals: category } : undefined
+                },
+              take: offset ? offset : 20,
+              skip: page ? (page - 1) * (offset || 20) : 0,   
+            },
+        )    
 
         return transactions
     }

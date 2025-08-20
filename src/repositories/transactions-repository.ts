@@ -1,11 +1,12 @@
-import {Prisma, Transaction} from '@prisma/client'
+import {Prisma, Transaction, TransactionCategory} from '@prisma/client'
 
 export interface FindByUserIdParams {
     page?: number,
     query?: string,
-    category?: string,
+    category?: TransactionCategory,
     year?: number,
     month?: number,
+    offset?: number,
 }
 
 export interface TransactionsRepository {

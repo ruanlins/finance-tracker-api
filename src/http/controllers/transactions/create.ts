@@ -14,7 +14,7 @@ export async function createTransaction(req: Request, res: Response, next: NextF
         location: z.string().optional(),
         category: z.nativeEnum(TransactionCategory),
         method: z.nativeEnum(TransactionMethod),
-        date: z.date().optional(),
+        date: z.coerce.date().optional(),
         type: z.nativeEnum(TransactionType),
         wallet_id: z.string()
     })
